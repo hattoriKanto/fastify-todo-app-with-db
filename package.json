@@ -6,8 +6,9 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "build": "prisma generate && tsc",
+    "build": "tsc",
     "prestart": "npx prisma generate",
+    "postinstall": "prisma generate",
     "prerun": "npx prisma migrate dev",
     "lint": "eslint . --ext .js,.ts --ignore-path .eslintignore",
     "lint:fix": "eslint . --ext .js,.ts --fix --ignore-path .eslintignore",
