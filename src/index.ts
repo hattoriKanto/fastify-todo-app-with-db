@@ -15,8 +15,14 @@ fastify.register(todosRoutes);
 
 const main = async () => {
   try {
-    await fastify.listen({ port: 3000 });
-    console.log(`fastify is running on port 3000`);
+    if (!fastify.server.listening) {
+      await fastify.listen({ port: 3000 });
+      fastify.log.info(`Server listening on port 3000`);
+    } else {
+      fastify.log.warn(
+        "Attempted to start Fastify, but it is already listening"
+      );
+    }
   } catch (err) {
     console.log("Error occurred while starting the server", err);
     fastify.log.error(err);
