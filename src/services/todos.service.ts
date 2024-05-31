@@ -1,4 +1,4 @@
-import { prisma } from "..";
+import { prisma } from "../../api";
 import { Body, Fields } from "../types";
 
 export const getAll = async () => {
