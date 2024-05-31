@@ -3,8 +3,6 @@ import Fastify from "fastify";
 import fastifyCors from "@fastify/cors";
 import { todosRoutes } from "./routes/todos.route";
 
-const PORT = 5002;
-
 export const fastify = Fastify();
 export const prisma = new PrismaClient();
 
@@ -17,8 +15,8 @@ fastify.register(todosRoutes);
 
 const main = async () => {
   try {
-    await fastify.listen({ port: PORT });
-    console.log(`fastify is running on port ${PORT}`);
+    await fastify.listen({ port: 3000 });
+    console.log(`fastify is running on port 3000`);
   } catch (err) {
     console.log("Error occurred while starting the server", err);
     fastify.log.error(err);

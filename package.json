@@ -11,13 +11,15 @@
     "prerun": "npx prisma migrate dev",
     "lint": "eslint . --ext .js,.ts --ignore-path .eslintignore",
     "lint:fix": "eslint . --ext .js,.ts --fix --ignore-path .eslintignore",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.14.0",
+    "@vercel/postgres": "^0.8.0",
     "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
     "http-status-codes": "^2.3.0",
@@ -27,6 +29,7 @@
     "@fastify/cors": "^9.0.1",
     "@types/cors": "^2.8.17",
     "@types/node": "^20.12.13",
+    "@types/pg": "^8.11.6",
     "@typescript-eslint/types": "^7.11.0",
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
