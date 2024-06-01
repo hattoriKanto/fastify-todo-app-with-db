@@ -1,4 +1,4 @@
-# The React Todo Application
+# Todo App Backend
 
 Welcome to the Todo App Backend repository! This project serves as the backend for the Todo App (the link to the frontend repo is down below), providing a robust and efficient API to manage tasks. The backend is designed to be fast, scalable, and maintainable.
 
