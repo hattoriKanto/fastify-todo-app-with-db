@@ -2,7 +2,11 @@ import { prisma } from "../../api";
 import { TodoRequestBody } from "../types";
 
 export const getAll = async () => {
-  const todos = await prisma.todo.findMany();
+  const todos = await prisma.todo.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return todos;
 };
