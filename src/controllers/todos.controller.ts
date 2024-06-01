@@ -63,7 +63,6 @@ export const deleteOne: Controller = async (req, rep) => {
 
 export const updateOne: Controller = async (req, rep) => {
   const { todoId } = req.params as TodoRequestParams;
-  const body = Object.entries(req.body as TodoRequestBody);
 
   const normalizedTodoId = Number(todoId);
   if (isIdValid(normalizedTodoId)) {
@@ -79,7 +78,7 @@ export const updateOne: Controller = async (req, rep) => {
       .send({ error: "Todo does not exist." });
   }
 
-  const response = await todosServices.updateOne(normalizedTodoId, body);
+  const response = await todosServices.updateOne(normalizedTodoId, req.body as TodoRequestBody);
 
   return rep.code(httpCodes.OK).send(response);
 };

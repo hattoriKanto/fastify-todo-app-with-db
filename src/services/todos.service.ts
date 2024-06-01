@@ -1,5 +1,5 @@
 import { prisma } from "../../api";
-import { Body, Fields } from "../types";
+import { TodoRequestBody } from "../types";
 
 export const getAll = async () => {
   const todos = await prisma.todo.findMany();
@@ -29,20 +29,11 @@ export const deleteOne = async (todoId: number) => {
   await prisma.todo.delete({ where: { id: todoId } });
 };
 
-export const updateOne = async (todoId: number, body: Body) => {
-  const filteredFields = body.filter(
-    ([key, value]) => typeof value === "string" || typeof value === "boolean"
-  );
-  const fieldsToUpdate: Fields = {};
-  const updatedFields = filteredFields.reduce((accum, [key, value]) => {
-    accum[key] = value;
-    return accum;
-  }, fieldsToUpdate);
-
+export const updateOne = async (todoId: number, data: TodoRequestBody) => {
   const updatedTodo = await prisma.todo.update({
     where: { id: todoId },
     data: {
-      ...updatedFields,
+      ...data,
     },
   });
 
