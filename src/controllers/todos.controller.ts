@@ -1,6 +1,12 @@
 import httpCodes from "http-status-codes";
 import * as todosServices from "../services/todos.service";
-import { Controller, TodoRequestBody, TodoRequestParams } from "../types";
+import {
+  ActionsOnMany,
+  Controller,
+  TodoRequestBody,
+  TodoRequestParams,
+  TodoRequestQuery,
+} from "../types";
 import { isIdValid } from "../utils/isIdValid";
 
 export const getAll: Controller = async (req, rep) => {
@@ -78,7 +84,51 @@ export const updateOne: Controller = async (req, rep) => {
       .send({ error: "Todo does not exist." });
   }
 
-  const response = await todosServices.updateOne(normalizedTodoId, req.body as TodoRequestBody);
+  const response = await todosServices.updateOne(
+    normalizedTodoId,
+    req.body as TodoRequestBody
+  );
+
+  return rep.code(httpCodes.OK).send(response);
+};
+
+export const actionOnMany: Controller = async (req, rep) => {
+  const { action } = req.query as TodoRequestQuery;
+
+  if (action === ActionsOnMany.delete) {
+    const query = req.query as TodoRequestQuery;
+    const idsParam = query.ids;
+
+    if (!idsParam) {
+      return rep.status(400).send({ error: "Missing ids parameter" });
+    }
+
+    const ids = idsParam.split(",").map((id) => Number(id));
+
+    if (ids.some(isNaN)) {
+      return rep.status(400).send({ error: "Invalid ids parameter" });
+    }
+
+    const response = await todosServices.deleteMany(ids);
+
+    if (response.count === 0) {
+      return rep
+        .code(httpCodes.NOT_FOUND)
+        .send({ error: "Todos do not exist in database." });
+    }
+
+    return rep.code(httpCodes.OK).send(response);
+  }
+
+  const { ids, completed } = req.body as TodoRequestBody;
+
+  const response = await todosServices.updateMany(ids, completed);
+
+  if (response.count === 0) {
+    return rep
+      .code(httpCodes.NOT_FOUND)
+      .send({ error: "Todos do not exist in database." });
+  }
 
   return rep.code(httpCodes.OK).send(response);
 };

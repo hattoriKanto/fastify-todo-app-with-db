@@ -9,5 +9,7 @@ export const todosRoutes: Routes = async (fastify, options) => {
   app.get("/todos/:todoId", todosController.getOne);
   app.post("/todos", todosController.createOne);
   app.delete("/todos/:todoId", todosController.deleteOne);
+  app.delete("/todos", todosController.actionOnMany);
   app.patch("/todos/:todoId", todosController.updateOne);
+  app.patch("/todos", todosController.actionOnMany);
 };

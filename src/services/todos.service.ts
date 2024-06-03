@@ -43,3 +43,23 @@ export const updateOne = async (todoId: number, data: TodoRequestBody) => {
 
   return updatedTodo;
 };
+
+export const updateMany = async (arrayIDs: number[], completed: boolean) => {
+  const updatedTodos = await prisma.todo.updateMany({
+    where: { id: { in: arrayIDs } },
+    data: {
+      completed,
+    },
+  });
+
+  return updatedTodos;
+};
+
+export const deleteMany = async (ids: number[]) => {
+  
+  const deletedTodos = await prisma.todo.deleteMany({
+    where: { id: { in: ids } },
+  });
+
+  return deletedTodos;
+};
